@@ -1,0 +1,178 @@
+img {
+    height: 500px;
+    width: 400px;
+    background-color: black;
+}
+
+
+/* Estilos de Esteban para pop Up de sala */
+
+.overlay{
+    positon:absolute;
+    top:0%;
+    left:0%;
+    width:100%;
+    height: 100%;
+    background-color: lightgray;
+    z-index:1;
+    opacity:.70;
+}
+
+.popup {
+    display: none; 
+    position: absolute;
+    top: 10%; 
+    left: 25%; 
+    width: 40%; 
+    height: 50%;
+    padding: 5px;
+    border: 5px solid black;
+    background-color: white;
+    z-index:2; 
+}
+
+#pic{
+    width:100%;
+    align: left;
+}
+
+.icon2{
+    width: 20px; 
+    height:20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+.movie-container {
+  margin: 20px 0;
+}
+
+.movie-container select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 5px 15px 5px 15px;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+
+.seat {
+  background-color: #444451;
+  height: 12px;
+  width: 15px;
+  margin: 3px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.seat.selected {
+  background-color: #6feaf6;
+}
+
+.seat.occupied {
+  background-color: red;
+}
+
+.seat:nth-of-type(2) {
+  margin-right: 18px;
+}
+
+.seat:nth-last-of-type(2) {
+  margin-left: 18px;
+}
+
+.seat:not(.occupied):hover {
+  cursor: pointer;
+  transform: scale(1.2);
+}
+
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.showcase {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #777;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+}
+
+.showcase li small {
+  margin-left: 2px;
+}
+
+.row {
+  display: flex;
+}
+
+.screen {
+  background-color: black;
+  height: 70px;
+  width: 60%;
+  margin: 15px 0;
+  transform: rotateX(-45deg);
+  box-shadow: 0 3px 10px rgb(0, 0, 0);
+}
+
+p.text {
+  margin: 5px 0;
+}
+
+p.text span {
+  color: #6feaf6;
+}
+
+div#sala{
+    float:left;  
+}
+
+div#datos{
+    float:left;   
+}
+
+/* Estilos de Esteban para el popUp de sala */
+
+
+
+
+
+
+
+/* Estilos para el popUp de login */
+#login {
+    display: none; 
+    position: absolute;
+    top: 10%; 
+    left: 25%; 
+    width: 20%; 
+    height: 25%;
+    padding: 5px;
+    border: 5px solid black;
+    background-color: white;
+    z-index:2; 
+}
+
+
+/* Estilos para el popUp de login */
