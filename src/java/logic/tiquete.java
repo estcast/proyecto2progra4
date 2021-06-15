@@ -15,16 +15,26 @@ public class tiquete {
     private int id_proyeccion;
     private String id_cliente;
     private String asiento;
+    private String tarjeta;
     
     public tiquete(){
         
     }
     
-    public tiquete(int id,int id_proyeccion,String id_cliente,String asiento){
+    public tiquete(int id,int id_proyeccion,String id_cliente,String asiento, String tarjeta){
         this.id = id;
         this.id_proyeccion = id_proyeccion;
         this.id_cliente = id_cliente;
         this.asiento = asiento;
+        this.tarjeta = tarjeta;
+    }
+
+    public String getTarjeta() {
+        return tarjeta;
+    }
+
+    public void setTarjeta(String tarjeta) {
+        this.tarjeta = tarjeta;
     }
 
     public int getId() {

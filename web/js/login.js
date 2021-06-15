@@ -1,4 +1,4 @@
-var url="http://localhost:8080/ProyectollProgralV/";
+var url="http://localhost:8080/proyecto2progra4/";
 
     function login(){
       //  if (!loginValidar()) return;
@@ -17,7 +17,7 @@ var url="http://localhost:8080/ProyectollProgralV/";
             usuario = await response.json();
             sessionStorage.setItem('user', JSON.stringify(usuario));
             document.location = url;
-         /*   $('#loginDialog').modal('hide');            
+         /*$('#loginDialog').modal('hide');            
            switch(usuario.rol){
                case 'ADM': document.location = url+"listado.html"; break;
                case 'CLI': document.location = url+"about.html"; break;

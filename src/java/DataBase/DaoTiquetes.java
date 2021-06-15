@@ -26,6 +26,7 @@ public class DaoTiquetes {
             p.setAsiento(rs.getString("asiento"));
             p.setId_cliente(rs.getString("id_cliente"));
             p.setId_proyeccion(rs.getInt("id_proyeccion"));
+            p.setTarjeta(rs.getString("tarjeta"));
             
             return p;
         } catch (SQLException ex) {
@@ -35,11 +36,13 @@ public class DaoTiquetes {
     
     public tiquete create(tiquete pel) throws SQLException, Exception {
         String sqlcommand = "insert into tiquetes (id_proyeccion,id_cliente,asiento) "
-                + "values(?,?,?))";
+                + "values(?,?,?,?))";
         PreparedStatement stm = Database.instance().prepareStatement(sqlcommand);
         stm.setInt(1, pel.getId_proyeccion());
         stm.setString(2, pel.getId_cliente());
         stm.setString(3, pel.getAsiento());
+        stm.setString(4, pel.getTarjeta());
+        
         int count = Database.instance().executeUpdate(stm);
         if(count == 0){
             throw new Exception("Proyeccion ya existe");
@@ -74,6 +77,7 @@ public class DaoTiquetes {
             p.setAsiento(rs.getString("asiento"));
             p.setId_cliente(rs.getString("id_cliente"));
             p.setId_proyeccion(rs.getInt("id_proyeccion"));
+            p.setTarjeta(rs.getString("tarjeta"));
             tiquetes.add(p);
             
         }
@@ -94,6 +98,7 @@ public class DaoTiquetes {
             p.setAsiento(rs.getString("asiento"));
             p.setId_cliente(rs.getString("id_cliente"));
             p.setId_proyeccion(rs.getInt("id_proyeccion"));
+            p.setTarjeta(rs.getString("tarjeta"));
             asientos_ocupados.add(p);
             
         }
@@ -113,6 +118,7 @@ public class DaoTiquetes {
             p.setAsiento(rs.getString("asiento"));
             p.setId_cliente(rs.getString("id_cliente"));
             p.setId_proyeccion(rs.getInt("id_proyeccion"));
+            p.setTarjeta(rs.getString("tarjeta"));
             asientos_cliente.add(p);
       }
       return asientos_cliente;

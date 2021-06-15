@@ -5,9 +5,11 @@
  */
 package Service;
 
+import DataBase.DaoPeliculas;
 import DataBase.DaoUsuarios;
 import java.util.ArrayList;
 import java.util.List;
+import logic.pelicula;
 import logic.usuario;
 
 /**
@@ -17,7 +19,7 @@ import logic.usuario;
 public class Service {
     
     private DaoUsuarios usuariosDAO;
-    
+    private DaoPeliculas peliculasDAO;
     
     
     private static Service theInstance;
@@ -32,6 +34,7 @@ public class Service {
     
     public Service(){
         this.usuariosDAO = new DaoUsuarios();
+        this.peliculasDAO = new DaoPeliculas();
     }
     
     //USUARIOS------------------------------------------
@@ -70,6 +73,16 @@ public class Service {
         }
     }
     
-    
+    //PELICULAS--------------------------------------
+    public List<pelicula> listPeliculas(){
+        List<pelicula> result = new ArrayList<>();
+        
+        try{
+            result = peliculasDAO.listaPeliculas();
+            return result;
+        }catch (Exception e) {
+            return null;
+        } 
+    }
     
 }

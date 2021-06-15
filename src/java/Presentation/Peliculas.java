@@ -5,29 +5,32 @@
  */
 package Presentation;
 
+
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import logic.usuario;
+import logic.pelicula;
+
 
 /**
  *
  * @author jamca
  */
-
-@Path("/usuarios")
-public class Usuarios {
+@Path("/peliculas")
+public class Peliculas {
     
     @GET
     @Produces({MediaType.APPLICATION_JSON})
-    public List<usuario> allUsuarios(){
-        List<usuario> todos = Service.Service.instance().listUsuarios();
+    public List<pelicula> allPeliculas(){
+        List<pelicula> todos = Service.Service.instance().listPeliculas();
         return todos;
     }
-    
-    
-    
     
 }

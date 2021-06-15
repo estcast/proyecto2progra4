@@ -1,15 +1,40 @@
 
-var peliculas = [{nombre: "Totoro"}, {nombre: "JohnWick"},{nombre: "Fast&Furious6"},{nombre: "JurassicPark"},{nombre: "Jaws"}];
+var peliculas = [{nombre: "Totoro",id: 2}, {nombre: "JohnWick",id: 3},{nombre: "Fast&Furious6",id: 4},{nombre: "JurassicPark",id: 5},{nombre: "Jaws",id: 6}];
 var asientos = [];
 var precioPelicula = 1000;
-
+var url="http://localhost:8080/proyecto2progra4//";
+var listPeliculas = new Array();
 function render() {
 
+}
+
+function fetchPeliculas(){
+    let request = new Request(url+'api/peliculas', {method: 'GET', headers: { }});
+    console.log('Entrando a Fech Peliculas');
+    console.log(request);
+    (async ()=>{
+        const response = await fetch(request);
+         if (!response.ok) {
+            console.log('Fallo en el response'); 
+            return;
+         }
+        listPeliculas = await response.json();
+        console.log(listPeliculas);
+        list();        
+    })();    
 }
 
 function list() {
     var listado = document.getElementById("listado");
     listado.innerHTML = "";
+  
+   // listPeliculas.forEach((p) =>{
+   //     row(listPeliculas, p);
+   // });
+    console.log(peliculas);
+    console.log('--------');
+    console.log(listPeliculas);
+      
     peliculas.forEach((p) =>{
         row(listado, p);
     });
@@ -20,22 +45,23 @@ function row(listado, p){
     
     div.setAttribute("class", "col");
     div.setAttribute("colspan","1");
-    /*
+    
     var nombreLabel = document.createElement("label");
-    nombreLabel.appendChild(document.createTextNode("pelicula"));
-    */
+    nombreLabel.appendChild(document.createTextNode(p.nombre));
+    
     var peliImg = document.createElement("img");
-    peliImg.setAttribute("src", "images/" + p.nombre + ".jpg");
+    peliImg.setAttribute("src", "images/" + p.id + ".jpg");
     peliImg.setAttribute("class", "icon");
     
-    //div.append(nombreLabel, peliImg);
+    div.append(nombreLabel, peliImg);
     peliImg.addEventListener("click",displayPop);
     div.append(peliImg);
     listado.appendChild(div);
 }
 
-function loaded(event){
-    list();
+function loaded(){
+    fetchPeliculas();
+   // list();
     document.getElementById("pic").addEventListener("click",hidePop);
     document.getElementById("pic2").addEventListener("click",hidePop);
     addEventSeats();
@@ -112,4 +138,5 @@ function menuDisplay(){
     }
 }
 
+//$(loaded);
 document.addEventListener("DOMContentLoaded", loaded);
