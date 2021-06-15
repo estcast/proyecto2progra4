@@ -1,4 +1,6 @@
 
+//Comentario de prueba
+
 var peliculas = [{nombre: "Totoro"}, {nombre: "JohnWick"},{nombre: "Fast&Furious6"},{nombre: "JurassicPark"},{nombre: "Jaws"}];
 var asientos = [];
 var precioPelicula = 1000;
