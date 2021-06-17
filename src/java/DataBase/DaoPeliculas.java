@@ -34,12 +34,12 @@ public class DaoPeliculas {
     }
     
     public pelicula create (pelicula pel) throws  SQLException, Exception {
-        String sqlcommand = "insert into peliculas (nombre,precio,diponible)"
+        String sqlcommand = "insert into peliculas(nombre,precio,disponible) "
                 +"values(?,?,?)";
         PreparedStatement stm = Database.instance().prepareStatement(sqlcommand);
         
         stm.setString(1, pel.getNombre());
-        stm.setString(2, Double.toString(pel.getPrecio()));
+        stm.setDouble(2, pel.getPrecio());
         stm.setBoolean(3, pel.getDisponible());
         int count = Database.instance().executeUpdate(stm);
         if (count == 0){

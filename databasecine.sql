@@ -50,6 +50,7 @@ CREATE TABLE `tiquetes` (
   `id` int NOT NULL AUTO_INCREMENT,
   `id_proyeccion` int DEFAULT NULL,
   `id_cliente` varchar(9) DEFAULT NULL,
+  `tarjeta` varchar(20) DEFAULT NULL,
   `asiento` varchar(9) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `proyec_fk` FOREIGN KEY (`id_proyeccion`) REFERENCES `proyecciones` (`id`),
@@ -59,6 +60,8 @@ CREATE TABLE `tiquetes` (
 
 
 insert into usuarios (id,nombre,contrasenna,rol) values ('1111','Admin Pueba','1111','1');
+insert into usuarios (id,nombre,contrasenna,rol) values ('2222','cliente Pueba','2222','2');
 insert into peliculas (id,nombre,precio,disponible) values(1,'Peli Prueba',100,0);
 insert into salas (id,nombre) values(1,'Sala A');
 insert into proyecciones (sala_id,fecha,hora,pelicula_id) values(1,'01/03/99','11:00',1);
+insert into tiquetes (id,id_proyeccion,id_cliente,tarjeta,asiento) values(1,1,'2222','9999999','A1');

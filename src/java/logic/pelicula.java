@@ -15,9 +15,10 @@ public class pelicula {
     private String nombre;
     private Double precio;
     private Boolean disponible;
-    
-    
+
+
     public pelicula(){
+        disponible = false;
     }
     
     public pelicula(int id,String nombre, Double precio, Boolean disponible){
@@ -60,7 +61,5 @@ public class pelicula {
     }
     
     
-    
-    
-    
+
 }
