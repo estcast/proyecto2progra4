@@ -56,13 +56,13 @@ public class Peliculas {
     
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Path("{id}/imagen")
-    public void addImage(@PathParam("id") String id, @FormDataParam("imagen") InputStream imagenStream){
+    @Path("{nombre}/imagen")
+    public void addImage(@PathParam("nombre") String nombre, @FormDataParam("imagen") InputStream imagenStream){
         try{
                 int read = 0;
                 byte[] bytes = new byte[1024];
 
-                OutputStream out = new FileOutputStream(new File(location + id + ".jpg"));
+                OutputStream out = new FileOutputStream(new File(location + nombre + ".jpg"));
                 while ((read = imagenStream.read(bytes)) != -1){out.write(bytes, 0, read);}
                 out.flush();
                 out.close();

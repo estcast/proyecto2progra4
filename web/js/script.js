@@ -65,10 +65,12 @@ function loaded(){
     document.getElementById("pic").addEventListener("click",hidePop);
     document.getElementById("pic2").addEventListener("click",hidePop);
     document.getElementById("pic3").addEventListener("click",hidePop);
+    document.getElementById("pic4").addEventListener("click",hidePop);
     addEventSeats();
     document.getElementById("loginDiv").addEventListener("click",displayLogin);
     menuDisplay();
     document.getElementById("registrarDiv").addEventListener("click",registroPeliculaDisplay);
+    document.getElementById("registrarUsuarioDiv").addEventListener("click",registroUsuarioDisplay);
 }
 
 function displayPop(){                                        //muestra el popUp
@@ -81,6 +83,7 @@ function hidePop(){                                                   //oculta e
     document.getElementById("pop").style.display='none';
     document.getElementById("login").style.display='none';
     document.getElementById("registroPelicula").style.display='none';
+    document.getElementById("registroUsuario").style.display='none';
 }
 
 function colorChanger(e){                               //Evento que cambia de color los asientos
@@ -131,8 +134,12 @@ function menuDisplay(){
     if(usuarioJson !== null){
         let usuario = JSON.parse(usuarioJson);
         document.getElementById("loginDiv").style.display = 'none';
+        document.getElementById("registrarUsuarioDiv").style.display = 'none';
         if(usuario.rol !== 1){
             document.getElementById("registrarDiv").style.display = 'none';
+        }
+        else{
+            
         }
     }
     else{
@@ -147,6 +154,10 @@ function registroPeliculaDisplay(){
     document.getElementById("registroPelicula").style.display='block';
 }
 
+function registroUsuarioDisplay(){
+    document.getElementById("over").className = "overlay";
+    document.getElementById("registroUsuario").style.display='block';
+}
 
 //$(loaded);
 document.addEventListener("DOMContentLoaded", loaded);

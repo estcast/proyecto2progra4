@@ -17,6 +17,7 @@ public class usuario {
     private int rol;
     
     public usuario(){
+        rol = 2;
     }
     
     public usuario(String id, String nombre, String contrasenna, int rol){

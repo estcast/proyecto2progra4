@@ -193,3 +193,22 @@ div#datos{
 }
 
 /* Estilos para el popUp de RegistroPelicula */
+
+
+
+
+/* Estilos para el popUp de RegistroUsuario */
+#registroUsuario {
+    display: none; 
+    position: absolute;
+    top: 10%; 
+    left: 25%; 
+    width: 22%; 
+    height: 60%;
+    padding: 5px;
+    border: 5px solid black;
+    background-color: white;
+    z-index:2; 
+}
+
+/* Estilos para el popUp de RegistroUsuario */
