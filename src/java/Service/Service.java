@@ -6,10 +6,14 @@
 package Service;
 
 import DataBase.DaoPeliculas;
+import DataBase.DaoProyeccion;
+import DataBase.DaoSalas;
 import DataBase.DaoUsuarios;
 import java.util.ArrayList;
 import java.util.List;
 import logic.pelicula;
+import logic.proyeccion;
+import logic.sala;
 import logic.usuario;
 
 /**
@@ -20,7 +24,8 @@ public class Service {
     
     private DaoUsuarios usuariosDAO;
     private DaoPeliculas peliculasDAO;
-    
+    private DaoSalas salasDAO;
+    private DaoProyeccion proyeccionesDAO;
     
     private static Service theInstance;
     
@@ -35,6 +40,8 @@ public class Service {
     public Service(){
         this.usuariosDAO = new DaoUsuarios();
         this.peliculasDAO = new DaoPeliculas();
+        this.salasDAO = new DaoSalas();
+        this.proyeccionesDAO = new DaoProyeccion();
     }
     
     //USUARIOS------------------------------------------
@@ -92,4 +99,27 @@ public class Service {
         }
     }
     
+   public void crearSala(sala s){
+        try{
+            salasDAO.create(s);
+        }catch(Exception e){            
+        }
+    } 
+    
+    public List<sala> listSalas(){        
+        List<sala> result = new ArrayList<>();        
+        try{
+            result = salasDAO.listaSalas();
+            return result;
+        }catch (Exception e) {
+            return result;
+        }         
+    }
+    
+    public void crearProyeccion(proyeccion p){
+        try{
+            proyeccionesDAO.create(p);
+        }catch(Exception e){            
+        }
+    } 
 }

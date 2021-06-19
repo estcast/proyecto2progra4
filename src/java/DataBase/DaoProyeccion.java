@@ -83,11 +83,11 @@ public class DaoProyeccion {
       return proyecciones;
     }
     public proyeccion create(proyeccion pel) throws SQLException, Exception {
-        String sqlcommand = "insert into proyecciones (sala_id,fecha,hora,pelicula_id)"
+        String sqlcommand = "insert into proyecciones (sala_id,fecha,hora,pelicula_id) "
                 + "values(?,?,?,?)";
         PreparedStatement stm = Database.instance().prepareStatement(sqlcommand);
         stm.setInt(1, pel.getSala_id());
-            stm.setString(2, pel.getFecha());
+        stm.setString(2, pel.getFecha());
         stm.setString(3, pel.getHora());
        
         stm.setInt(4, pel.getPelicula_id());

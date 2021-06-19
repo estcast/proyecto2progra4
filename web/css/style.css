@@ -210,5 +210,40 @@ div#datos{
     background-color: white;
     z-index:2; 
 }
-
 /* Estilos para el popUp de RegistroUsuario */
+
+
+
+
+/* Estilos para el popUp de RegistroSala */
+#registroSala {
+    display: none; 
+    position: absolute;
+    top: 10%; 
+    left: 25%; 
+    width: 22%; 
+    height: 30%;
+    padding: 5px;
+    border: 5px solid black;
+    background-color: white;
+    z-index:2; 
+}
+/* Estilos para el popUp de RegistroSala */
+
+
+
+
+/* Estilos para el popUp de RegistroProyeccion */
+#registroProyeccion {
+    display: none; 
+    position: absolute;
+    top: 10%; 
+    left: 25%; 
+    width: 22%; 
+    height: 57%;
+    padding: 5px;
+    border: 5px solid black;
+    background-color: white;
+    z-index:2; 
+}
+/* Estilos para el popUp de RegistroProyeccion */

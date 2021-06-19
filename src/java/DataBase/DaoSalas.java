@@ -58,11 +58,10 @@ public class DaoSalas {
     }
      
     public sala create(sala sala) throws SQLException, Exception {
-        String sqlcommand = "insert into salas (id,nombre)"
-                + "values(?,?)";
+        String sqlcommand = "insert into salas(nombre)"
+                + "values(?)";
         PreparedStatement stm = Database.instance().prepareStatement(sqlcommand);
-        stm.setString(1,Integer.toString(sala.getId()));
-        stm.setString(2, sala.getNombre());
+        stm.setString(1, sala.getNombre());
         int count = Database.instance().executeUpdate(stm);
         if (count == 0) {
             throw new Exception("Usuario ya existe");

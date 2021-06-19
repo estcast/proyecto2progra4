@@ -58,10 +58,45 @@ var url="http://localhost:8080/ProyectollProgralV/";
         })(); 
     
     }
+    
+    function registroSala(){      
+        sala = {
+            nombre: document.getElementById("salaNombre").value
+        };        
+        let request = new Request(url+'api/peliculas/sala', 
+        {method: 'POST', headers: { 'Content-Type': 'application/json'},body: JSON.stringify(sala)});
+        (async ()=>{
+            const response = await fetch(request);           
+            if (!response.ok) {
+                return;}
+            document.location = url;                        
+        })(); 
+    
+    }
+    
+    function registroProyeccion(){      
+        proyeccion = {
+            sala_id: document.getElementById("selectSala").value,
+            pelicula_id: document.getElementById("selectPeliculas").value,
+            fecha: document.getElementById("fechaProyección").value,
+            hora:document.getElementById("horaProyección").value
+        };        
+        let request = new Request(url+'api/peliculas/proyeccion', 
+        {method: 'POST', headers: { 'Content-Type': 'application/json'},body: JSON.stringify(proyeccion)});
+        (async ()=>{
+            const response = await fetch(request);           
+            if (!response.ok) {
+                return;}
+            document.location = url;                        
+        })(); 
+    
+    }
       
-      function load(){
+    function load(){
         document.getElementById("peliculaButton").addEventListener("click",registroPelicula);      
         document.getElementById("nu_Button").addEventListener("click",registroUsuario); 
-  }
+        document.getElementById("sala_Button").addEventListener("click",registroSala);
+        document.getElementById("proyeccion_Button").addEventListener("click",registroProyeccion);
+    }
   
   document.addEventListener("DOMContentLoaded", load);

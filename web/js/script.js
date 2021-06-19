@@ -4,6 +4,7 @@ var asientos = [];
 var precioPelicula = 1000;
 var url="http://localhost:8080/proyecto2progra4//";
 var listPeliculas = new Array();
+var listSalas = new Array();
 function render() {
 
 }
@@ -66,11 +67,15 @@ function loaded(){
     document.getElementById("pic2").addEventListener("click",hidePop);
     document.getElementById("pic3").addEventListener("click",hidePop);
     document.getElementById("pic4").addEventListener("click",hidePop);
+    document.getElementById("pic5").addEventListener("click",hidePop);
+    document.getElementById("pic6").addEventListener("click",hidePop);
     addEventSeats();
     document.getElementById("loginDiv").addEventListener("click",displayLogin);
     menuDisplay();
     document.getElementById("registrarDiv").addEventListener("click",registroPeliculaDisplay);
     document.getElementById("registrarUsuarioDiv").addEventListener("click",registroUsuarioDisplay);
+    document.getElementById("registrarSalaDiv").addEventListener("click",registroSalaDisplay);
+    document.getElementById("registrarProyeccionDiv").addEventListener("click",registroProyeccionDisplay);
 }
 
 function displayPop(){                                        //muestra el popUp
@@ -84,6 +89,8 @@ function hidePop(){                                                   //oculta e
     document.getElementById("login").style.display='none';
     document.getElementById("registroPelicula").style.display='none';
     document.getElementById("registroUsuario").style.display='none';
+    document.getElementById("registroSala").style.display='none';
+    document.getElementById("registroProyeccion").style.display='none';
 }
 
 function colorChanger(e){                               //Evento que cambia de color los asientos
@@ -145,6 +152,8 @@ function menuDisplay(){
     else{
         document.getElementById("logoutDiv").style.display = 'none';
         document.getElementById("registrarDiv").style.display = 'none';
+        document.getElementById("registrarSalaDiv").style.display = 'none';
+        document.getElementById("registrarProyeccionDiv").style.display = 'none';
     }
 }
 
@@ -159,5 +168,56 @@ function registroUsuarioDisplay(){
     document.getElementById("registroUsuario").style.display='block';
 }
 
+function registroSalaDisplay(){
+    document.getElementById("over").className = "overlay";
+    document.getElementById("registroSala").style.display='block';
+}
+
+function registroProyeccionDisplay(){
+    fechSalas();
+     listSelectPeliculas();
+    document.getElementById("over").className = "overlay";
+    document.getElementById("registroProyeccion").style.display='block';
+}
+
+function fechSalas(){
+    url2="http://localhost:8080/ProyectollProgralV/";
+    
+    let request = new Request(url2+'api/peliculas/salas', {method: 'GET', headers: { }});
+    (async ()=>{
+        const response = await fetch(request);
+         if (!response.ok) {
+            return;
+         }
+        listSalas = await response.json(); 
+        listSelectSalas();
+    })(); 
+}
+
+function listSelectSalas(){
+    selectSala = document.getElementById("selectSala");
+    selectSala.innerHTML = "";
+    
+    listSalas.forEach((p) =>{
+        option = document.createElement("option");
+        option.setAttribute("value",p.id);
+        option.appendChild(document.createTextNode(p.nombre));
+        
+        selectSala.appendChild(option);
+    });
+}
+
+function listSelectPeliculas(){
+    selectPelicula = document.getElementById("selectPeliculas");
+    selectPelicula.innerHTML = "";
+    
+    listPeliculas.forEach((p) =>{
+        option = document.createElement("option");
+        option.setAttribute("value",p.id);
+        option.appendChild(document.createTextNode(p.nombre));
+        
+        selectPelicula.appendChild(option);
+    });
+}
 //$(loaded);
 document.addEventListener("DOMContentLoaded", loaded);

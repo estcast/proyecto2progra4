@@ -25,6 +25,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import logic.pelicula;
+import logic.proyeccion;
+import logic.sala;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
@@ -71,4 +73,33 @@ public class Peliculas {
             }
     }
     
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/sala")
+    public void addSala(sala sal){
+        try {
+            Service.Service.instance().crearSala(sal);
+        } catch (Exception ex) {
+            throw new NotAcceptableException(); 
+        }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/salas")
+    public List<sala> allSalas(){
+        List<sala> todos = Service.Service.instance().listSalas();
+        return todos;
+    }
+    
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/proyeccion")
+    public void addProyeccion(proyeccion pro){
+        try {
+            Service.Service.instance().crearProyeccion(pro);
+        } catch (Exception ex) {
+            throw new NotAcceptableException(); 
+        }
+    }
 }
