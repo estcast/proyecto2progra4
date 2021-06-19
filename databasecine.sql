@@ -27,7 +27,7 @@ CREATE TABLE `proyecciones` (
   `id` int NOT NULL AUTO_INCREMENT,
   `sala_id` int  NOT NULL ,
   `pelicula_id` int,
-  `fecha` varchar(8) NOT NULL,
+  `fecha` varchar(15) NOT NULL,
   `hora` varchar(50) NOT NULL ,
    CONSTRAINT `sala_fk` FOREIGN KEY (`sala_id`) REFERENCES `peliculas` (`id`),
    CONSTRAINT `pelicula_fk` FOREIGN KEY (`pelicula_id`) REFERENCES `salas` (`id`),
@@ -63,5 +63,5 @@ insert into usuarios (id,nombre,contrasenna,rol) values ('1111','Admin Pueba','1
 insert into usuarios (id,nombre,contrasenna,rol) values ('2222','cliente Pueba','2222','2');
 insert into peliculas (id,nombre,precio,disponible) values(1,'Peli Prueba',100,0);
 insert into salas (id,nombre) values(1,'Sala A');
-insert into proyecciones (sala_id,fecha,hora,pelicula_id) values(1,'01/03/99','11:00',1);
+insert into proyecciones (sala_id,fecha,hora,pelicula_id) values(1,'1999-03-01','11:00',1);
 insert into tiquetes (id,id_proyeccion,id_cliente,tarjeta,asiento) values(1,1,'2222','9999999','A1');

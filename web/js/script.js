@@ -1,12 +1,31 @@
 
 var peliculas = [{nombre: "Totoro",id: 2}, {nombre: "JohnWick",id: 3},{nombre: "Fast&Furious6",id: 4},{nombre: "JurassicPark",id: 5},{nombre: "Jaws",id: 6}];
 var asientos = [];
+var proyecciones = [{Dia: "May 29", Hora: "03pm", Sala: "B2"}, {Dia: "May 28", Hora: "11am", Sala: "A5"}, {Dia: "May 28", Hora: "05pm", Sala: "A5"}];
 var precioPelicula = 1000;
-var url="http://localhost:8080/proyecto2progra4//";
+var url="http://localhost:8080/proyecto11progra1V/";
 var listPeliculas = new Array();
 var listSalas = new Array();
+
+var searchButton = document.getElementById("search-button");
+var searchInput = document.getElementById("search-input");
 function render() {
 
+}
+
+function buscar() {
+    //var searchButton = document.getElementById("search-button");
+    var searchInput = document.getElementById("search-input");
+    console.log(searchInput);
+    console.log(searchInput.value);
+    
+    var inputValue = searchInput.value;
+    
+    pels = listPeliculas.filter(p => p.nombre.includes(inputValue));
+    console.log(listPeliculas);
+    list(pels);
+    console.log(pels);
+    alert(inputValue);
 }
 
 function fetchPeliculas(){
@@ -21,11 +40,11 @@ function fetchPeliculas(){
          }
         listPeliculas = await response.json();
         console.log(listPeliculas);
-        list();        
+        list(listPeliculas);        
     })();    
 }
 
-function list() {
+function list(pel) {
     var listado = document.getElementById("listado");
     listado.innerHTML = "";
   
@@ -36,27 +55,42 @@ function list() {
     console.log('--------');
     console.log(listPeliculas);
       
-    peliculas.forEach((p) =>{
+    pel.forEach((p) =>{
         row(listado, p);
     });
 }
 
 function row(listado, p){
     var div = document.createElement("div");
-    
+    var div2 = document.createElement("div");
+
     div.setAttribute("class", "col");
-    div.setAttribute("colspan","1");
-    
+    div.setAttribute("colspan", "1");
+
+    var peliImg = document.createElement("img");
+    peliImg.setAttribute("src", "images/" + p.nombre + ".jpg");
+    peliImg.setAttribute("class", "icon");
+    peliImg.setAttribute("onmouseover", "bigImg(this)");
+    peliImg.setAttribute("onmouseout", "normalImg(this)");
+    /*
     var nombreLabel = document.createElement("label");
     nombreLabel.appendChild(document.createTextNode(p.nombre));
+    */
+    var proyUl = document.createElement("ul");
     
-    var peliImg = document.createElement("img");
-    peliImg.setAttribute("src", "images/" + p.id + ".jpg");
-    peliImg.setAttribute("class", "icon");
-    
-    div.append(nombreLabel, peliImg);
-    peliImg.addEventListener("click",displayPop);
+    var proyLi = document.createElement("li");
+    proyecciones.forEach(pro =>{
+        proyLi = pro.Dia + pro.Hora + pro.Sala;
+            
+            //proyUl.appendChild(document.createTextNode(pro.Dia + pro.Hora + pro.Sala));
+            //div2.appendChild(proyUl);
+            proyUl.append(proyLi);
+            });
+    div2.appendChild(proyUl);
     div.append(peliImg);
+    peliImg.addEventListener("click", displayPop);
+    div.append(peliImg);
+    div.appendChild(div2);
     listado.appendChild(div);
 }
 
@@ -76,6 +110,18 @@ function loaded(){
     document.getElementById("registrarUsuarioDiv").addEventListener("click",registroUsuarioDisplay);
     document.getElementById("registrarSalaDiv").addEventListener("click",registroSalaDisplay);
     document.getElementById("registrarProyeccionDiv").addEventListener("click",registroProyeccionDisplay);
+    
+    document.getElementById("search-button").addEventListener('click', buscar);
+}
+
+function bigImg(x) {
+  x.style.width = "420px";
+  x.style.height = "520x";
+}
+
+function normalImg(x) {
+  x.style.width = "400px";
+  x.style.height = "500px";
 }
 
 function displayPop(){                                        //muestra el popUp
