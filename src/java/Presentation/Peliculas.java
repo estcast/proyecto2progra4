@@ -27,6 +27,7 @@ import javax.ws.rs.core.MediaType;
 import logic.pelicula;
 import logic.proyeccion;
 import logic.sala;
+import logic.tiquete;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 
 
@@ -101,5 +102,14 @@ public class Peliculas {
         } catch (Exception ex) {
             throw new NotAcceptableException(); 
         }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}/compras")
+    public List<tiquete> allTiquetes(@PathParam("id") String id){
+        int i = Integer.parseInt(id);
+        List<tiquete> todos = Service.Service.instance().listTiquetes(i);
+        return todos;
     }
 }

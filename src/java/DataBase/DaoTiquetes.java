@@ -50,16 +50,23 @@ public class DaoTiquetes {
         return pel;
     }
     
-    public tiquete readbyId (int id) throws Exception{
-        String sqlcommand = "select * from tiquetes where id =?";
+    public List<tiquete> readbyId (int id) throws Exception{
+        List<tiquete> tiquetes = Collections.synchronizedList(new ArrayList<tiquete>());
+        
+        String sqlcommand = "select * from tiquetes where id_cliente =?";
         PreparedStatement stm = Database.instance().prepareStatement(sqlcommand);
         stm.setInt(1, id);
         ResultSet rs = Database.instance().executeQuery(stm);
-        if (rs.next()) {
-            return from(rs);
-        } else {
-            throw new Exception("Proyeccion no Existe");
+        while(rs.next()){
+            tiquete p = new tiquete();
+            p.setId(rs.getInt("id"));
+            p.setAsiento(rs.getString("asiento"));
+            p.setId_cliente(rs.getString("id_cliente"));
+            p.setId_proyeccion(rs.getInt("id_proyeccion"));
+            p.setTarjeta(rs.getString("tarjeta"));
+            tiquetes.add(p);          
         }
+        return tiquetes;
     }
     
     public List<tiquete> listaTiquetes() throws Exception{

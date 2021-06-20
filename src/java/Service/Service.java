@@ -8,12 +8,14 @@ package Service;
 import DataBase.DaoPeliculas;
 import DataBase.DaoProyeccion;
 import DataBase.DaoSalas;
+import DataBase.DaoTiquetes;
 import DataBase.DaoUsuarios;
 import java.util.ArrayList;
 import java.util.List;
 import logic.pelicula;
 import logic.proyeccion;
 import logic.sala;
+import logic.tiquete;
 import logic.usuario;
 
 /**
@@ -26,6 +28,7 @@ public class Service {
     private DaoPeliculas peliculasDAO;
     private DaoSalas salasDAO;
     private DaoProyeccion proyeccionesDAO;
+    private DaoTiquetes tiquetesDAO;
     
     private static Service theInstance;
     
@@ -42,6 +45,7 @@ public class Service {
         this.peliculasDAO = new DaoPeliculas();
         this.salasDAO = new DaoSalas();
         this.proyeccionesDAO = new DaoProyeccion();
+        this.tiquetesDAO = new DaoTiquetes();
     }
     
     //USUARIOS------------------------------------------
@@ -122,4 +126,35 @@ public class Service {
         }catch(Exception e){            
         }
     } 
+    
+    public List<tiquete> listTiquetes(int id){        
+        List<tiquete> result = new ArrayList<>();        
+        try{
+            result = tiquetesDAO.readbyId(id);
+            return result;
+        }catch (Exception e) {
+            return result;
+        }         
+    }
+    
+    //Poyecciones
+    public List<proyeccion> listProyeccionesPorPelicula(int id){
+        List<proyeccion> result = new ArrayList<>();
+        try{
+            result = proyeccionesDAO.proyeccion_porPelicula(id);
+            return result;
+        }catch(Exception e){
+            return result;
+        }
+    }
+    
+    public List<proyeccion> listProyecciones(){
+        List<proyeccion> result = new ArrayList<>();
+        try{
+            result = proyeccionesDAO.listaProyecciones();
+            return result;
+        }catch(Exception e){
+            return result;
+        }
+    }
 }

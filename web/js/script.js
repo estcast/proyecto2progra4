@@ -3,9 +3,11 @@ var peliculas = [{nombre: "Totoro",id: 2}, {nombre: "JohnWick",id: 3},{nombre: "
 var asientos = [];
 var proyecciones = [{Dia: "May 29", Hora: "03pm", Sala: "B2"}, {Dia: "May 28", Hora: "11am", Sala: "A5"}, {Dia: "May 28", Hora: "05pm", Sala: "A5"}];
 var precioPelicula = 1000;
-var url="http://localhost:8080/proyecto11progra1V/";
+var url="http://localhost:8080/Proyecto11Progra1V/";
 var listPeliculas = new Array();
 var listSalas = new Array();
+var listTiquetes = new Array();
+var listProyecciones = new Array();
 
 var searchButton = document.getElementById("search-button");
 var searchInput = document.getElementById("search-input");
@@ -14,7 +16,7 @@ function render() {
 }
 
 function buscar() {
-    //var searchButton = document.getElementById("search-button");
+
     var searchInput = document.getElementById("search-input");
     console.log(searchInput);
     console.log(searchInput.value);
@@ -40,17 +42,30 @@ function fetchPeliculas(){
          }
         listPeliculas = await response.json();
         console.log(listPeliculas);
+        
         list(listPeliculas);        
     })();    
+}
+
+function fetchProyecciones() {
+    let request = new Request(url + 'api/proyecciones', {method: 'GET', headers: {}})
+    console.log('Entrando fetch proyecciones');
+    console.log(request);
+    (async () => {
+        const response = await fetch(request);
+        if (!response.ok) {
+            console.log('Fallo en el response');
+            return;
+        }
+        listProyecciones = await response.json();
+        console.log(listProyecciones);
+    })();
 }
 
 function list(pel) {
     var listado = document.getElementById("listado");
     listado.innerHTML = "";
   
-   // listPeliculas.forEach((p) =>{
-   //     row(listPeliculas, p);
-   // });
     console.log(peliculas);
     console.log('--------');
     console.log(listPeliculas);
@@ -61,6 +76,7 @@ function list(pel) {
 }
 
 function row(listado, p){
+    /*
     var div = document.createElement("div");
     var div2 = document.createElement("div");
 
@@ -72,10 +88,7 @@ function row(listado, p){
     peliImg.setAttribute("class", "icon");
     peliImg.setAttribute("onmouseover", "bigImg(this)");
     peliImg.setAttribute("onmouseout", "normalImg(this)");
-    /*
-    var nombreLabel = document.createElement("label");
-    nombreLabel.appendChild(document.createTextNode(p.nombre));
-    */
+
     var proyUl = document.createElement("ul");
     
     var proyLi = document.createElement("li");
@@ -92,17 +105,66 @@ function row(listado, p){
     div.append(peliImg);
     div.appendChild(div2);
     listado.appendChild(div);
+     
+     */
+    let request = new Request(url + 'api/proyecciones', {method: 'GET', headers: {}});
+    console.log('Request Proyecciones');
+    console.log(request);
+    console.log('listProyecciones');
+    console.log(listProyecciones);
+    var div = document.createElement("div");
+    var div2 = document.createElement("div");
+
+    div.setAttribute("class", "col");
+    div.setAttribute("colspan", "1");
+
+    var peliImg = document.createElement("img");
+    peliImg.setAttribute("src", "images/" + p.nombre + ".jpg");
+    peliImg.setAttribute("class", "icon");
+
+    div.setAttribute("onmouseover", "bigImg(this)");
+    div.setAttribute("onmouseout", "normalImg(this)");
+    var proyUl = document.createElement("ul");
+    proyUl.setAttribute("class", "hided");
+
+    //proyecciones.forEach(pro => {
+    listProyecciones.forEach(pro => {
+        var idPString = p.id.toString();
+        var idProString = pro.pelicula_id.toString();
+        console.log(idPString);
+        console.log(idProString);
+        if (idPString == idProString) {
+            var proyLi = document.createElement("li");
+            var anchor = document.createElement("a");
+            anchor.setAttribute("href", "api/proyecciones/" + p.id);
+            var text = document.createTextNode(pro.fecha + " " + pro.hora + " " + pro.sala_id);
+            anchor.append(text);
+            proyLi.append(anchor);
+            proyUl.append(proyLi);
+        }
+    });
+
+    div2.setAttribute("display", "none");
+    div2.appendChild(proyUl);
+    div.append(peliImg);
+    peliImg.addEventListener("click", displayPop);
+    div.append(peliImg);
+    div.appendChild(div2);
+    listado.appendChild(div);
 }
 
 function loaded(){
     fetchPeliculas();
-   // list();
+    fetchProyecciones();
+    list(listPeliculas); 
+   
     document.getElementById("pic").addEventListener("click",hidePop);
     document.getElementById("pic2").addEventListener("click",hidePop);
     document.getElementById("pic3").addEventListener("click",hidePop);
     document.getElementById("pic4").addEventListener("click",hidePop);
     document.getElementById("pic5").addEventListener("click",hidePop);
     document.getElementById("pic6").addEventListener("click",hidePop);
+    document.getElementById("pic7").addEventListener("click",hidePop);
     addEventSeats();
     document.getElementById("loginDiv").addEventListener("click",displayLogin);
     menuDisplay();
@@ -110,18 +172,18 @@ function loaded(){
     document.getElementById("registrarUsuarioDiv").addEventListener("click",registroUsuarioDisplay);
     document.getElementById("registrarSalaDiv").addEventListener("click",registroSalaDisplay);
     document.getElementById("registrarProyeccionDiv").addEventListener("click",registroProyeccionDisplay);
+    document.getElementById("verComprasDiv").addEventListener("click",verComprasDisplay);
     
     document.getElementById("search-button").addEventListener('click', buscar);
 }
 
 function bigImg(x) {
-  x.style.width = "420px";
-  x.style.height = "520x";
+   x.firstChild.nextSibling.firstChild.setAttribute("class", "showed");
+   x.firstChild.nextSibling.firstChild.display = "inherit";
 }
 
 function normalImg(x) {
-  x.style.width = "400px";
-  x.style.height = "500px";
+  x.firstChild.nextSibling.firstChild.setAttribute("class", "hided");
 }
 
 function displayPop(){                                        //muestra el popUp
@@ -137,6 +199,7 @@ function hidePop(){                                                   //oculta e
     document.getElementById("registroUsuario").style.display='none';
     document.getElementById("registroSala").style.display='none';
     document.getElementById("registroProyeccion").style.display='none';
+    document.getElementById("verCompras").style.display='none';
 }
 
 function colorChanger(e){                               //Evento que cambia de color los asientos
@@ -190,9 +253,11 @@ function menuDisplay(){
         document.getElementById("registrarUsuarioDiv").style.display = 'none';
         if(usuario.rol !== 1){
             document.getElementById("registrarDiv").style.display = 'none';
+            document.getElementById("registrarSalaDiv").style.display = 'none';
+            document.getElementById("registrarProyeccionDiv").style.display = 'none';
         }
         else{
-            
+            document.getElementById("verComprasDiv").style.display = 'none';
         }
     }
     else{
@@ -200,6 +265,7 @@ function menuDisplay(){
         document.getElementById("registrarDiv").style.display = 'none';
         document.getElementById("registrarSalaDiv").style.display = 'none';
         document.getElementById("registrarProyeccionDiv").style.display = 'none';
+        document.getElementById("verComprasDiv").style.display = 'none';
     }
 }
 
@@ -220,13 +286,19 @@ function registroSalaDisplay(){
 }
 
 function registroProyeccionDisplay(){
-    fechSalas();
+    fetchSalas();
      listSelectPeliculas();
     document.getElementById("over").className = "overlay";
     document.getElementById("registroProyeccion").style.display='block';
 }
 
-function fechSalas(){
+function verComprasDisplay(){
+    fetchCompras();
+    document.getElementById("over").className = "overlay";
+    document.getElementById("verCompras").style.display='block';
+}
+
+function fetchSalas(){
     url2="http://localhost:8080/ProyectollProgralV/";
     
     let request = new Request(url2+'api/peliculas/salas', {method: 'GET', headers: { }});
@@ -265,5 +337,38 @@ function listSelectPeliculas(){
         selectPelicula.appendChild(option);
     });
 }
+
+function fetchCompras(){
+    usuarioJson = sessionStorage.getItem('user');
+    usuario = JSON.parse(usuarioJson);
+    url2 = "http://localhost:8080/ProyectollProgralV/";
+    
+    let request = new Request(url2+'api/peliculas/' + usuario.id + '/compras', {method: 'GET', headers: { }});
+    (async ()=>{
+        const response = await fetch(request);
+         if (!response.ok) {
+            return;
+         }
+         listTiquetes = await response.json();
+         listSelectCompras();
+    })();
+}
+
+
+function listSelectCompras(){
+    compras = document.getElementById("infoCompras");
+    compras.innerHTML = "";
+    
+    listTiquetes.forEach((p) =>{
+        span = document.createElement("span");
+        delete p.id;
+        delete p.id_cliente;
+        delete p.tarjeta;
+        span.appendChild(document.createTextNode(JSON.stringify(p)));
+        
+        compras.appendChild(span);
+    });
+}
+
 //$(loaded);
 document.addEventListener("DOMContentLoaded", loaded);

@@ -1,7 +1,7 @@
 var url="http://localhost:8080/ProyectollProgralV/";
                                        
     function login(){
-      //  if (!loginValidar()) return;
+
         usuario = {
             id: document.getElementById("usuario").value,
             contrasenna: document.getElementById("clave").value
@@ -11,17 +11,13 @@ var url="http://localhost:8080/ProyectollProgralV/";
         (async ()=>{
             const response = await fetch(request);           
             if (!response.ok) {
-               // errorMessage(response.status,$("#loginDialog #errorDiv"));
+
                 return;}
             
             usuario = await response.json();
             sessionStorage.setItem('user', JSON.stringify(usuario));
             document.location = url;
-         /*$('#loginDialog').modal('hide');            
-           switch(usuario.rol){
-               case 'ADM': document.location = url+"listado.html"; break;
-               case 'CLI': document.location = url+"about.html"; break;
-           } */                          
+                          
         })(); 
     
     }
@@ -35,7 +31,7 @@ var url="http://localhost:8080/ProyectollProgralV/";
         let request = new Request(url+'api/login', {method: 'DELETE', headers: { }});
         (async ()=>{
             const response = await fetch(request);
-            if (!response.ok) {//errorMessage(response.status,$("#loginDialog #errorDiv"));
+            if (!response.ok) {
                 return;}
             sessionStorage.removeItem('user');
             document.location = url;                         

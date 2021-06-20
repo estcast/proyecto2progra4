@@ -24,7 +24,7 @@ Prueba 3 Jam Carlos
             <script>
         function generatePDF() {
           // Choose the element that our invoice is rendered in.
-          const element = document.getElementById("login");
+          const element = document.getElementById("over");
           // Choose the element and save the PDF for our user.
           html2pdf()
             .from(element)
@@ -73,6 +73,10 @@ Prueba 3 Jam Carlos
                     <input  id="search-input" type="search" placeholder="Search" aria-label="Search">
                     <button id="search-button" type="button">Search</button>
                 </form>
+             
+                <div id="verComprasDiv" class="navbar-nav">
+                    <a class="nav-link text-white" href="#">Ver mis compras</a>
+                </div>
              
         </nav>
         
@@ -184,7 +188,7 @@ Prueba 3 Jam Carlos
         <div id="registroUsuario">
             <div id="pic4"> <img class="icon2" src="images/delete.jpg"> </div>
             <div>Ingrese ID</div>
-            <div><input type="text" id="nu_id"></div>
+            <div><input type="number" id="nu_id"></div>
             <br>
             <div>Ingrese Nombre</div>
             <div><input type="text" id="nu_nombre"></div>
@@ -224,6 +228,11 @@ Prueba 3 Jam Carlos
             <div><input id="proyeccion_Button" type="button" value="Enviar"></div>
         </div>
                 
+        <div id="verCompras">
+            <div id="pic7"> <img class="icon2" src="images/delete.jpg"> </div>
+            <div id="infoCompras"></div>
+        </div>        
+        
         <br>
         <br>
         <br>
