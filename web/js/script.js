@@ -8,6 +8,10 @@ var listPeliculas = new Array();
 var listSalas = new Array();
 var listTiquetes = new Array();
 var listProyecciones = new Array();
+var listTiquetes2 = new Array();
+
+var peliculaSeleccionada;
+var proyeccionSeleccionada;
 
 var searchButton = document.getElementById("search-button");
 var searchInput = document.getElementById("search-input");
@@ -76,37 +80,7 @@ function list(pel) {
 }
 
 function row(listado, p){
-    /*
-    var div = document.createElement("div");
-    var div2 = document.createElement("div");
-
-    div.setAttribute("class", "col");
-    div.setAttribute("colspan", "1");
-
-    var peliImg = document.createElement("img");
-    peliImg.setAttribute("src", "images/" + p.nombre + ".jpg");
-    peliImg.setAttribute("class", "icon");
-    peliImg.setAttribute("onmouseover", "bigImg(this)");
-    peliImg.setAttribute("onmouseout", "normalImg(this)");
-
-    var proyUl = document.createElement("ul");
-    
-    var proyLi = document.createElement("li");
-    proyecciones.forEach(pro =>{
-        proyLi = pro.Dia + pro.Hora + pro.Sala;
-            
-            //proyUl.appendChild(document.createTextNode(pro.Dia + pro.Hora + pro.Sala));
-            //div2.appendChild(proyUl);
-            proyUl.append(proyLi);
-            });
-    div2.appendChild(proyUl);
-    div.append(peliImg);
-    peliImg.addEventListener("click", displayPop);
-    div.append(peliImg);
-    div.appendChild(div2);
-    listado.appendChild(div);
-     
-     */
+   
     let request = new Request(url + 'api/proyecciones', {method: 'GET', headers: {}});
     console.log('Request Proyecciones');
     console.log(request);
@@ -136,9 +110,14 @@ function row(listado, p){
         if (idPString == idProString) {
             var proyLi = document.createElement("li");
             var anchor = document.createElement("a");
-            anchor.setAttribute("href", "api/proyecciones/" + p.id);
-            var text = document.createTextNode(pro.fecha + " " + pro.hora + " " + pro.sala_id);
+            anchor.setAttribute("href", "#");
+            var text = document.createTextNode(pro.id + " " + pro.fecha + " " + pro.hora + " " + pro.sala_id);
             anchor.append(text);
+            
+            //anchor.addEventListener("click",displayPop(pro.id));
+            
+            anchor.addEventListener("click",(e)=>{displayPop(pro.id);});
+            
             proyLi.append(anchor);
             proyUl.append(proyLi);
         }
@@ -147,16 +126,20 @@ function row(listado, p){
     div2.setAttribute("display", "none");
     div2.appendChild(proyUl);
     div.append(peliImg);
-    peliImg.addEventListener("click", displayPop);
+   // peliImg.addEventListener("click", displayPop);
     div.append(peliImg);
     div.appendChild(div2);
     listado.appendChild(div);
 }
 
 function loaded(){
+    
     fetchPeliculas();
     fetchProyecciones();
     list(listPeliculas); 
+    fetchTiquetes();
+
+
    
     document.getElementById("pic").addEventListener("click",hidePop);
     document.getElementById("pic2").addEventListener("click",hidePop);
@@ -175,6 +158,7 @@ function loaded(){
     document.getElementById("verComprasDiv").addEventListener("click",verComprasDisplay);
     
     document.getElementById("search-button").addEventListener('click', buscar);
+     document.getElementById("comprarButton").addEventListener('click', venderTiquetes);
 }
 
 function bigImg(x) {
@@ -186,9 +170,13 @@ function normalImg(x) {
   x.firstChild.nextSibling.firstChild.setAttribute("class", "hided");
 }
 
-function displayPop(){                                        //muestra el popUp
+function displayPop(id){                                        //muestra el popUp de butacas
+    
+    listTicketsById(id);
+    
     document.getElementById("over").className = "overlay";
     document.getElementById("pop").style.display='block';
+    updateInfo();
 }
 
 function hidePop(){                                                   //oculta el popUP
@@ -368,6 +356,90 @@ function listSelectCompras(){
         
         compras.appendChild(span);
     });
+}
+
+function fetchTiquetes(){
+    url2 = "http://localhost:8080/ProyectollProgralV/";
+    
+    let request = new Request(url2+'api/proyecciones/tiquetes',{method: 'GET', headers: { }});
+    (async ()=>{
+        const response = await fetch(request);
+         if (!response.ok) {
+            return;
+         }
+         listTiquetes2 = await response.json();
+         console.log("Lista tiquetes de fetch tiquetes");
+         console.log(listTiquetes2);
+    })();
+}
+
+
+function listTicketsById(id){
+    //listTiquetes2
+    listTiquetes2.forEach((p) =>{
+      // document.getElementById(p.asiento).classList.remove("selected");
+       document.getElementById(p.asiento).className="seat";
+    });
+    asientos = [];
+
+    listProyecciones.forEach((t) =>{
+        if(t.id == id){
+            listPeliculas.forEach((peli) =>{
+                if(t.pelicula_id == peli.id){
+                    precioPelicula = peli.precio;
+                    peliculaSeleccionada = peli;
+                    proyeccionSeleccionada = t;
+                }
+                
+            });
+        }
+    });
+       
+    listTiquetes2.forEach((p) =>{
+        if(p.id_proyeccion == id){
+            asiento = document.getElementById(p.asiento).classList.add("occupied");
+        }
+      /*  else{
+            document.getElementById(p.asiento).classList.remove("occupied");
+        } */
+    });
+}
+
+
+function agregarTiquete(tiquete){
+     url2 = "http://localhost:8080/ProyectollProgralV/";
+        let request = new Request(url2+'api/proyecciones/tiquetes', {method: 'POST',
+            headers: { 'Content-Type': 'application/json'},body: JSON.stringify(tiquete)});
+        (async ()=>{
+            const response = await fetch(request);           
+            if (!response.ok) {
+                return;}           
+            document.location = url;                        
+        })();
+}
+
+
+function venderTiquetes(){
+    user_1 = sessionStorage.getItem('user');
+    
+    if(user_1 == null){
+        hidePop();
+        displayLogin();
+        return;
+    }
+    
+    user_2 = JSON.parse(user_1);
+    
+    asientos.forEach((as) =>{     
+        tick = {
+            id_cliente: user_2.id,
+            id_proyeccion: proyeccionSeleccionada.id,
+            asiento:as,
+            tarjeta: document.getElementById("tarjetaPago").value
+        };
+        agregarTiquete(tick);
+    });
+     document.location = url;
 }
 
 //$(loaded);

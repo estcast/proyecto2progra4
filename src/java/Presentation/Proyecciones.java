@@ -6,12 +6,15 @@
 package Presentation;
 
 import java.util.List;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import logic.proyeccion;
+import logic.tiquete;
 
 /**
  *
@@ -35,6 +38,22 @@ public class Proyecciones {
     public List<proyeccion> allProyecciones(){
         List<proyeccion> todos = Service.Service.instance().listProyecciones();
         return todos;
+    }
+    
+    
+    @GET
+    @Path("/tiquetes")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<tiquete> allTiquetes(){
+        List<tiquete> todos = Service.Service.instance().listTiquetes();
+        return todos;
+    }
+    
+    @POST
+    @Path("/tiquetes")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void addTiqute(tiquete u){
+        Service.Service.instance().crearTiquete(u);
     }
     
 }

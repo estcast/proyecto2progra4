@@ -31,7 +31,7 @@ img {
     top: 10%; 
     left: 25%; 
     width: 40%; 
-    height: 50%;
+    height: 55%;
     padding: 5px;
     border: 5px solid black;
     background-color: white;
@@ -154,10 +154,10 @@ p.text span {
 div#sala{
     float:left;  
 }
-
+/*
 div#datos{
     float:left;   
-}
+}*/
 
 /* Estilos de Esteban para el popUp de sala */
 

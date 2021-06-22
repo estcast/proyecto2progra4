@@ -3,7 +3,7 @@ var url="http://localhost:8080/ProyectollProgralV/";
     function login(){
 
         usuario = {
-            id: document.getElementById("usuario").value,
+            id: document.getElementById("usuarioLogin").value,
             contrasenna: document.getElementById("clave").value
         };
         

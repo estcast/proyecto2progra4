@@ -157,4 +157,22 @@ public class Service {
             return result;
         }
     }
+    
+    
+    public List<tiquete> listTiquetes(){        
+        List<tiquete> result = new ArrayList<>();        
+        try{
+            result = tiquetesDAO.listaTiquetes();
+            return result;
+        }catch (Exception e) {
+            return result;
+        }         
+    }
+    
+    public void crearTiquete(tiquete t){
+        try{
+            tiquetesDAO.create(t);
+        }catch(Exception e){            
+        }
+    }
 }
